@@ -2,34 +2,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Blogger</title>
+    <title>Edit customer</title>
 </head>
 <body>
-    <h1>Create blogger</h1>
-    <p>
-        <a href="/list">Blogger list</a>
-    </p>
-    <th::block th:if="${message}">
-        <p th:text="${message}"></p>
-    </th::block>
-<form th:action="@{/create-blogger}" th:object="${blogger}" method="post">
+<h1>Edit blogger</h1>
+<p>
+    <a href="/list">Blogger list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/edit-bloger}" th:object="${blogger}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
-    <table border="1">
+    <table>
         <tr>
             <td>Title:</td>
             <td><input type="text" th:field="*{title}"/></td>
         </tr>
         <tr>
             <td>Category:</td>
-            <td><input type="text" th:field="*{category}" /></td>
+            <td><input type="text" th:field="*{category}"/></td>
         </tr>
         <tr>
-            <td>Description:</td>
+            <td>Descreption:</td>
             <td><textarea th:rows="10" th:cols="96" th:field="*{descriptions}" /></td>
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Create blogger"></td>
+            <td><input type="submit" value="Update blogger"></td>
         </tr>
     </table>
 </form>
