@@ -1,5 +1,9 @@
 package blogging;
 
+import blogging.repository.BloggerRepository;
+import blogging.repository.impl.BloggerRepositoryImpl;
+import blogging.service.BloggerService;
+import blogging.service.impl.BloggerServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -7,6 +11,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -30,28 +36,30 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
+@EnableJpaRepositories("blogging.repository")
 @ComponentScan("blogging")
+@EnableSpringDataWebSupport
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
+
+
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
-//    @Bean
-//    public CustomerRepository customerRepository(){
-//        return new CustomerRepositoryImpl();
-//    }
-//
-//    @Bean
-//    public CustomerService customerService(){
-//        return new CustomerServiecImpl();
-//    }
+    @Bean
+    public BloggerRepository bloggerRepository(){
+        return new BloggerRepositoryImpl();
+    }
 
+    @Bean
+    public BloggerService bloggerService(){
+        return new BloggerServiceImpl();
+    }
 
-    //Thymeleaf Configuration
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -99,7 +107,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/blogging");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/blog");
         dataSource.setUsername( "root" );
         dataSource.setPassword( "12345678" );
         return dataSource;
