@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  <a href="/list">List Blogger</a> |
+  <a href="/list">List Blogger</a> | <a href="/category">List Category</a>
   </body>
 </html>

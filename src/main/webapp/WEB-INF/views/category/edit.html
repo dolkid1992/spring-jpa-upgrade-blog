@@ -7,30 +7,22 @@
 <body>
 <h1>Edit blogger</h1>
 <p>
-    <a href="/list">Blogger list</a>
+    <a href="/category">Category list</a>
 </p>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
 <!--<form th:action="@{/edit-bloger}" th:object="${blogger}" method="post">-->
-<form th:object="${blogger}" method="post">
+<form th:object="${category}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>
-            <td>Title:</td>
-            <td><input type="text" th:field="*{title}"/></td>
-        </tr>
-        <tr>
-            <td>Author:</td>
-            <td><input type="text" th:field="*{author}"/></td>
-        </tr>
-        <tr>
-            <td>Descreption:</td>
-            <td><textarea th:rows="10" th:cols="96" th:field="*{descriptions}" /></td>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}"/></td>
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Update blogger"></td>
+            <td><input type="submit" value="Update Category"></td>
         </tr>
     </table>
 </form>

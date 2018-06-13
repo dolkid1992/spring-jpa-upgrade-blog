@@ -5,25 +5,20 @@
     <title>Delete Blog</title>
 </head>
 <body>
-<h1>Delete Blogger</h1>
-<h2>Are you sure</h2>
+<h1>Delete Category</h1>
 <p>
     <a th:href="@{/list}">Blog list</a>
 </p>
-<form th:action="@{/delete-blogger}"th:object="${blogger}" method="post">
+<form th:action="@{/delete-category}" th:object="${category}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>
-            <td>Tittle</td>
-            <td th:text="${blogger.title}"></td>
-        </tr>
-        <tr>
-            <td>Author</td>
-            <td th:text="${blogger.author}"></td>
+            <td>Name:</td>
+            <td th:text="${category.name}"></td>
         </tr>
         <tr>
             <td></td>
-            <td><input th:type="submit" value="Delete Blog"></td>
+            <td><input type="submit" value="Delete Category"></td>
         </tr>
     </table>
 </form>

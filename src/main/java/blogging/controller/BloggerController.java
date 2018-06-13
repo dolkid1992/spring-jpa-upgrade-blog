@@ -1,22 +1,34 @@
 package blogging.controller;
 
 import blogging.model.Blogger;
+import blogging.model.Category;
 import blogging.service.BloggerService;
+import blogging.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BloggerController {
 
     @Autowired
     private BloggerService bloggerService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @ModelAttribute("categories")
+    public Iterable<Category> categories(){
+        return categoryService.findAll();
+    }
 
     @GetMapping("/create-blogger")
     public ModelAndView showCreateForm() {
@@ -36,8 +48,13 @@ public class BloggerController {
     }
 
     @GetMapping("/list")
-    public ModelAndView listBlogger() {
-        List<Blogger> list = bloggerService.findAll();
+    public ModelAndView listBlogger(@RequestParam("s")Optional<String>s, Pageable pageable) {
+        Page<Blogger> list;
+        if (s.isPresent()){
+            list = bloggerService.findAllByTitleContaining(s.get(), pageable);
+        }else {
+            list = bloggerService.findAll(pageable);
+        }
         ModelAndView modelAndView = new ModelAndView("/blogger/list");
         modelAndView.addObject("list", list);
         return modelAndView;
@@ -64,7 +81,7 @@ public class BloggerController {
         }
     }
 
-    @PostMapping("/edit-blogger")
+    @PostMapping("/edit-blogger/{id}")
     public ModelAndView updateBlogger(@ModelAttribute("blogger") Blogger blogger) {
         bloggerService.save(blogger);
         ModelAndView modelAndView = new ModelAndView("/blogger/edit");

@@ -10,15 +10,19 @@ public class Blogger {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private String category;
+    private String author;
     private String descriptions;
 
     public Blogger(){
     }
 
-    public Blogger(String title, String category, String descriptions) {
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Blogger(String title, String author, String descriptions) {
         this.title = title;
-        this.category = category;
+        this.author = author;
         this.descriptions = descriptions;
     }
 
@@ -27,7 +31,7 @@ public class Blogger {
         return String.format("Blogger{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
+                ", author='" + author + '\'' +
                 ", descriptions='" + descriptions + '\'' +
                 '}');
     }
@@ -48,12 +52,12 @@ public class Blogger {
         this.title = title;
     }
 
-    public String getCategory() {
-        return category;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getDescriptions() {
@@ -62,5 +66,13 @@ public class Blogger {
 
     public void setDescriptions(String descriptions) {
         this.descriptions = descriptions;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
